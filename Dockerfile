@@ -1,7 +1,10 @@
 
+<<<<<<< HEAD
 # ==========================================
 # STAGE 1: Build React + Vite Frontend
 # ==========================================
+=======
+>>>>>>> 95cd0399f2f72a181483fdf7c51b92e7bea9216e
 FROM node:20-alpine AS frontend-build
 
 WORKDIR /app/frontend
@@ -17,9 +20,12 @@ ENV VITE_API_BASE_URL=/api
 RUN npm run build
 
 
+<<<<<<< HEAD
 # ==========================================
 # STAGE 2: Build Spring Boot Backend
 # ==========================================
+=======
+>>>>>>> 95cd0399f2f72a181483fdf7c51b92e7bea9216e
 FROM maven:3.9.9-eclipse-temurin-21 AS backend-build
 
 WORKDIR /app/backend
@@ -32,6 +38,15 @@ COPY Finora_Backend/src ./src
 
 RUN mvn clean package -DskipTests
 
+<<<<<<< HEAD
+=======
+FROM eclipse-temurin:21-jre-alpine
+
+WORKDIR /app
+
+RUN apk add --no-cache nginx gettext
+
+>>>>>>> 95cd0399f2f72a181483fdf7c51b92e7bea9216e
 
 # ==========================================
 # STAGE 3: Runtime
@@ -45,6 +60,7 @@ RUN apk add --no-cache nginx gettext
 # Copy React production build
 COPY --from=frontend-build /app/frontend/dist /usr/share/nginx/html
 
+<<<<<<< HEAD
 # Copy Spring Boot JAR
 COPY --from=backend-build /app/backend/target/*.jar /app/app.jar
 
@@ -52,6 +68,13 @@ COPY --from=backend-build /app/backend/target/*.jar /app/app.jar
 COPY nginx.conf.template /app/nginx.conf.template
 
 # Copy startup script
+=======
+COPY --from=backend-build /app/backend/target/*.jar /app/app.jar
+
+
+COPY nginx.conf.template /app/nginx.conf.template
+
+>>>>>>> 95cd0399f2f72a181483fdf7c51b92e7bea9216e
 COPY start.sh /app/start.sh
 
 RUN chmod +x /app/start.sh
